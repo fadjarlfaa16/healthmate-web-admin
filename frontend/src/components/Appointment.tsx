@@ -88,7 +88,6 @@ const Appointment = () => {
             <th className="px-4 py-2 border-b border-gray-700">Specialist</th>
             <th className="px-4 py-2 border-b border-gray-700">Based</th>
             <th className="px-4 py-2 border-b border-gray-700">Schedule</th>
-            <th className="px-4 py-2 border-b border-gray-700">Action</th>
           </tr>
         </thead>
         <tbody className="text-black">
