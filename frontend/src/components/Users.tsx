@@ -80,43 +80,43 @@ const Users = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="relative">
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-white">
-          <thead className="bg-black">
+    <div className="relative p-4">
+      <div className="overflow-x-auto bg-white rounded-lg shadow">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-2 border-b border-gray-700">ID</th>
-              <th className="px-4 py-2 border-b border-gray-700">Username</th>
-              <th className="px-4 py-2 border-b border-gray-700">Email</th>
-              <th className="px-4 py-2 border-b border-gray-700">Password</th>
-              <th className="px-4 py-2 border-b border-gray-700">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Password</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Account Created
               </th>
-              <th className="px-4 py-2 border-b border-gray-700">Action</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
             </tr>
           </thead>
-          <tbody className="text-black">
+          <tbody className="bg-white divide-y divide-gray-200">
             {currentUsers.map((user) => (
               <tr key={user.id}>
-                <td className="px-4 py-2 border border-gray-700 text-center">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {user.id}
                 </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {user.profile?.fullname ?? "-"}
                 </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {user.email}
                 </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {user.password}
                 </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {formatDate(user.accountCreated)}
                 </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <button
                     onClick={() => handleActionClick(user)}
-                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded align-middle content-center"
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-medium"
                   >
                     Delete User
                   </button>
@@ -128,25 +128,52 @@ const Users = () => {
 
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="mt-4 flex justify-center">
-            <nav className="inline-flex">
-              {Array.from({ length: totalPages }, (_, index) => {
-                const pageNumber = index + 1;
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
-                    className={`px-3 py-1 mx-1 border border-gray-700 rounded ${
-                      currentPage === pageNumber
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              })}
-            </nav>
+          <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div className="flex-1 flex justify-between sm:hidden">
+              <button
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                Next
+              </button>
+            </div>
+            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm text-gray-700">
+                  Showing <span className="font-medium">{indexOfFirstItem + 1}</span> to{' '}
+                  <span className="font-medium">{Math.min(indexOfLastItem, users.length)}</span> of{' '}
+                  <span className="font-medium">{users.length}</span> results
+                </p>
+              </div>
+              <div>
+                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                  {Array.from({ length: totalPages }, (_, index) => {
+                    const pageNumber = index + 1;
+                    return (
+                      <button
+                        key={pageNumber}
+                        onClick={() => handlePageChange(pageNumber)}
+                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                          currentPage === pageNumber
+                            ? "z-10 bg-blue-50 border-blue-500 text-blue-600"
+                            : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
+                        }`}
+                      >
+                        {pageNumber}
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -155,23 +182,23 @@ const Users = () => {
       {showConfirmation && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="bg-white rounded shadow-lg p-6 z-10">
-            <p className="mb-4 text-gray-800">
-              Are you sure you want to delete this account named "
-              {selectedUser?.email}"?
+          <div className="bg-white rounded-lg shadow-xl p-6 z-10 w-96">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Confirm Deletion</h3>
+            <p className="text-sm text-gray-500 mb-6">
+              Are you sure you want to delete the account "{selectedUser?.email}"? This action cannot be undone.
             </p>
-            <div className="flex justify-end space-x-4">
+            <div className="flex justify-end space-x-3">
               <button
                 onClick={handleCancelAction}
-                className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
+                className="px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                No
+                Cancel
               </button>
               <button
                 onClick={handleConfirmAction}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                className="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
               >
-                Yes
+                Delete
               </button>
             </div>
           </div>
