@@ -79,47 +79,41 @@ const Appointment = () => {
   // };
   return (
     <>
-      <table className="min-w-full text-white">
-        <thead className="bg-black">
-          <tr>
-            <th className="px-4 py-2 border-b border-gray-700">Timestamp</th>
-            <th className="px-4 py-2 border-b border-gray-700">Doctor</th>
-            <th className="px-4 py-2 border-b border-gray-700">Patient</th>
-            <th className="px-4 py-2 border-b border-gray-700">Specialist</th>
-            <th className="px-4 py-2 border-b border-gray-700">Based</th>
-            <th className="px-4 py-2 border-b border-gray-700">Schedule</th>
-          </tr>
-        </thead>
-        <tbody className="text-black">
-          {currentAppointment.map((e) => (
-            <tr key={e.id}>
-              <td className="px-4 py-2 border border-gray-700 text-center">
-                {formatDate(e.createdAt)}
-              </td>
-              <td className="px-4 py-2 border border-gray-700 text-center">
-                {e.doctorName}
-              </td>
-              <td className="px-4 py-2 border border-gray-700 text-center">
-                {e.userId}
-              </td>
-              <td className="px-4 py-2 border border-gray-700 text-center">
-                {e.doctorName}
-              </td>
-              <td className="px-4 py-2 border border-gray-700 text-center">
-                {e.date}
-              </td>
-              <td className="px-4 py-2 border border-gray-700 text-center">
-                <button
-                  // onClick={() => handleActionClick(e)}
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded align-middle content-center"
-                >
-                  Delete Doctor
-                </button>
-              </td>
+      <div className="overflow-x-auto bg-white rounded-lg shadow">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-2 ">Timestamp</th>
+              <th className="px-4 py-2 ">Doctor</th>
+              <th className="px-4 py-2 ">Patient</th>
+              <th className="px-4 py-2 ">Specialist</th>
+              <th className="px-4 py-2 ">Based</th>
+              <th className="px-4 py-2 ">Schedule</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {currentAppointment.map((e) => (
+              <tr key={e.id}>
+                <td className="px-4 py-2  text-center">
+                  {formatDate(e.createdAt)}
+                </td>
+                <td className="px-4 py-2  text-center">{e.doctorName}</td>
+                <td className="px-4 py-2  text-center">{e.userId}</td>
+                <td className="px-4 py-2  text-center">{e.doctorName}</td>
+                <td className="px-4 py-2  text-center">{e.date}</td>
+                <td className="px-4 py-2 text-center">
+                  <button
+                    // onClick={() => handleActionClick(e)}
+                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded align-middle content-center"
+                  >
+                    Delete Doctor
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };

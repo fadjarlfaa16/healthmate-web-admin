@@ -252,78 +252,78 @@ const Doctors = () => {
             <input
               type="text"
               placeholder="Search anything..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+              className="w-full pl-10 pr-4 py-2 text-center rounded-lg border border-gray-300 focus:outline-none focus:ring-2 text-center focus:ring-blue-500 text-black"
             />
           </div>
 
           <button
             onClick={handleRegistrationClick}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 text-center px-4 rounded-lg transition-colors duration-200"
             disabled={isLoading}
           >
             Regist Doctor
           </button>
         </div>
 
-        <table className="min-w-full text-white">
-          <thead className="bg-black">
-            <tr>
-              <th className="px-4 py-2 border-b border-gray-700">ID</th>
-              <th className="px-4 py-2 border-b border-gray-700">Fullname</th>
-              <th className="px-4 py-2 border-b border-gray-700">Age</th>
-              <th className="px-4 py-2 border-b border-gray-700">Specialist</th>
-              <th className="px-4 py-2 border-b border-gray-700">Based</th>
-              <th className="px-4 py-2 border-b border-gray-700">Contact</th>
-              <th className="px-4 py-2 border-b border-gray-700">
-                Appointment Count
-              </th>
-              <th className="px-4 py-2 border-b border-gray-700">Action</th>
-            </tr>
-          </thead>
-          <tbody className="text-black">
-            {currentDoctors.map((doctor) => (
-              <tr key={doctor.id}>
-                <td className="px-4 py-2 border border-gray-700 text-center">
-                  {doctor.id}
-                </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
-                  {doctor.fullname}
-                </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
-                  {doctor.age}
-                </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
-                  {doctor.specialist}
-                </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
-                  {doctor.based}
-                </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
-                  {doctor.contact}
-                </td>
-                <td className="px-4 py-2 border border-gray-700 text-center">
-                  {doctor.appointmentCount || 0}
-                </td>
-                <td className="px-4 py-2 border border-gray-700 text-center space-x-2">
-                  <button
-                    onClick={() => handleEditClick(doctor)}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded"
-                    disabled={isLoading}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleActionClick(doctor)}
-                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
-                    disabled={isLoading}
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="overflow-x-auto bg-white rounded-lg shadow">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-2 text-center">ID</th>
+                <th className="px-4 py-2 text-center">Fullname</th>
+                <th className="px-4 py-2 text-center">Age</th>
+                <th className="px-4 py-2 text-center">Specialist</th>
+                <th className="px-4 py-2 text-center">Based</th>
+                <th className="px-4 py-2 text-center">Contact</th>
+                <th className="px-4 py-2 text-center">Appointment Count</th>
+                <th className="px-4 py-2 text-center">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-black">
+              {currentDoctors.map((doctor) => (
+                <tr key={doctor.id}>
+                  <td className="px-4 py-2 text-center text-center">
+                    {doctor.id}
+                  </td>
+                  <td className="px-4 py-2 text-center text-center">
+                    {doctor.fullname}
+                  </td>
+                  <td className="px-4 py-2 text-center text-center">
+                    {doctor.age}
+                  </td>
+                  <td className="px-4 py-2 text-center text-center">
+                    {doctor.specialist}
+                  </td>
+                  <td className="px-4 py-2 text-center text-center">
+                    {doctor.based}
+                  </td>
+                  <td className="px-4 py-2 text-center text-center">
+                    {doctor.contact}
+                  </td>
+                  <td className="px-4 py-2 text-center text-center">
+                    {doctor.appointmentCount || 0}
+                  </td>
+                  <td className="px-4 py-2 text-center text-center space-x-2 text-center">
+                    <button
+                      onClick={() => handleEditClick(doctor)}
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded"
+                      disabled={isLoading}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleActionClick(doctor)}
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
+                      disabled={isLoading}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         {/* Pagination Controls */}
         {totalPages > 1 && (
@@ -335,7 +335,7 @@ const Doctors = () => {
                   <button
                     key={pageNumber}
                     onClick={() => handlePageChange(pageNumber)}
-                    className={`px-3 py-1 mx-1 border border-gray-700 rounded ${
+                    className={`px-3 py-1 mx-1 rounded ${
                       currentPage === pageNumber
                         ? "bg-blue-500 text-white"
                         : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -363,14 +363,14 @@ const Doctors = () => {
             <div className="flex justify-end space-x-4">
               <button
                 onClick={handleCancelAction}
-                className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
+                className="px-4 py-2 text-center bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
                 disabled={isLoading}
               >
                 No
               </button>
               <button
                 onClick={handleConfirmAction}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                className="px-4 py-2 text-center bg-blue-500 hover:bg-blue-600 text-white rounded"
                 disabled={isLoading}
               >
                 {isLoading ? "Deleting..." : "Yes"}
@@ -395,19 +395,19 @@ const Doctors = () => {
             )}
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
+                <label className="block text-gray-700 text-sm font-bold mb-2 text-center">
                   Profile Picture
                 </label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => setProfileFile(e.target.files?.[0] || null)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md"
                 />
 
                 {/* Tampilkan preview gambar */}
                 {profileFile && (
-                  <div className="mt-2">
+                  <div className="mt-2 text-center">
                     <img
                       src={URL.createObjectURL(profileFile)}
                       alt="Preview"
@@ -418,7 +418,7 @@ const Doctors = () => {
               </div>
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="fullname"
                 >
                   Full Name
@@ -429,7 +429,7 @@ const Doctors = () => {
                   name="fullname"
                   value={newDoctor.fullname}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -437,7 +437,7 @@ const Doctors = () => {
 
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="age"
                 >
                   Age
@@ -448,7 +448,7 @@ const Doctors = () => {
                   name="age"
                   value={newDoctor.age || ""}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -456,7 +456,7 @@ const Doctors = () => {
 
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="specialist"
                 >
                   Specialist
@@ -467,7 +467,7 @@ const Doctors = () => {
                   name="specialist"
                   value={newDoctor.specialist}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -475,7 +475,7 @@ const Doctors = () => {
 
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="based"
                 >
                   Based Location
@@ -486,7 +486,7 @@ const Doctors = () => {
                   name="based"
                   value={newDoctor.based}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -494,7 +494,7 @@ const Doctors = () => {
 
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="contact"
                 >
                   Contact
@@ -505,7 +505,7 @@ const Doctors = () => {
                   name="contact"
                   value={newDoctor.contact}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -515,14 +515,14 @@ const Doctors = () => {
                 <button
                   type="button"
                   onClick={handleCloseRegistration}
-                  className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
+                  className="px-4 py-2 text-center bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
                   disabled={isLoading}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                  className="px-4 py-2 text-center bg-blue-500 hover:bg-blue-600 text-white rounded"
                   disabled={isLoading}
                 >
                   {isLoading ? "Registering..." : "Register Doctor"}
@@ -549,7 +549,7 @@ const Doctors = () => {
             <form onSubmit={handleEditSubmit}>
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="edit-fullname"
                 >
                   Full Name
@@ -560,7 +560,7 @@ const Doctors = () => {
                   name="fullname"
                   value={editedDoctor.fullname || ""}
                   onChange={handleEditInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -568,7 +568,7 @@ const Doctors = () => {
 
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="edit-age"
                 >
                   Age
@@ -579,7 +579,7 @@ const Doctors = () => {
                   name="age"
                   value={editedDoctor.age || ""}
                   onChange={handleEditInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -587,7 +587,7 @@ const Doctors = () => {
 
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="edit-specialist"
                 >
                   Specialist
@@ -598,7 +598,7 @@ const Doctors = () => {
                   name="specialist"
                   value={editedDoctor.specialist || ""}
                   onChange={handleEditInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -606,7 +606,7 @@ const Doctors = () => {
 
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="edit-based"
                 >
                   Based Location
@@ -617,7 +617,7 @@ const Doctors = () => {
                   name="based"
                   value={editedDoctor.based || ""}
                   onChange={handleEditInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -625,7 +625,7 @@ const Doctors = () => {
 
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
                   htmlFor="edit-contact"
                 >
                   Contact
@@ -636,7 +636,7 @@ const Doctors = () => {
                   name="contact"
                   value={editedDoctor.contact || ""}
                   onChange={handleEditInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-black"
+                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
                   required
                   disabled={isLoading}
                 />
@@ -646,14 +646,14 @@ const Doctors = () => {
                 <button
                   type="button"
                   onClick={handleCloseEditModal}
-                  className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
+                  className="px-4 py-2 text-center bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
                   disabled={isLoading}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+                  className="px-4 py-2 text-center bg-blue-500 hover:bg-blue-600 text-white rounded"
                   disabled={isLoading}
                 >
                   {isLoading ? "Updating..." : "Update Doctor"}

@@ -40,20 +40,20 @@ const NewsList = () => {
   }, []);
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className=" p-6">
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         Latest News
       </h1>
       {loading ? (
         <div className="text-center text-gray-500">Loading news...</div>
       ) : (
-        <div className="h-[400px] overflow-y-auto space-y-4">
+        <div className="space-y-4 ml-0 mr-0">
           {articles.map((news, index) => (
             <div
               key={index}
-              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow bg-white "
             >
-              <div className="flex gap-4 mb-3">
+              <div className="flex gap-4 mb-3 ">
                 <img
                   src={news.urlToImage || "https://via.placeholder.com/100"}
                   alt={news.title}

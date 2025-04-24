@@ -85,14 +85,24 @@ const Users = () => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Password</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Username
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Email
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Password
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Account Created
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -138,7 +148,9 @@ const Users = () => {
                 Previous
               </button>
               <button
-                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                onClick={() =>
+                  handlePageChange(Math.min(totalPages, currentPage + 1))
+                }
                 disabled={currentPage === totalPages}
                 className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
@@ -148,13 +160,19 @@ const Users = () => {
             <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm text-gray-700">
-                  Showing <span className="font-medium">{indexOfFirstItem + 1}</span> to{' '}
-                  <span className="font-medium">{Math.min(indexOfLastItem, users.length)}</span> of{' '}
-                  <span className="font-medium">{users.length}</span> results
+                  Showing{" "}
+                  <span className="font-medium">{indexOfFirstItem + 1}</span> to{" "}
+                  <span className="font-medium">
+                    {Math.min(indexOfLastItem, users.length)}
+                  </span>{" "}
+                  of <span className="font-medium">{users.length}</span> results
                 </p>
               </div>
               <div>
-                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                <nav
+                  className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                  aria-label="Pagination"
+                >
                   {Array.from({ length: totalPages }, (_, index) => {
                     const pageNumber = index + 1;
                     return (
@@ -183,9 +201,12 @@ const Users = () => {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="bg-white rounded-lg shadow-xl p-6 z-10 w-96">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Confirm Deletion</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
+              Confirm Deletion
+            </h3>
             <p className="text-sm text-gray-500 mb-6">
-              Are you sure you want to delete the account "{selectedUser?.email}"? This action cannot be undone.
+              Are you sure you want to delete the account "{selectedUser?.email}
+              "? This action cannot be undone.
             </p>
             <div className="flex justify-end space-x-3">
               <button

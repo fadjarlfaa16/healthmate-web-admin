@@ -10,7 +10,7 @@ import AnimatedNavbar from "./components/Navbar";
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="bg-gradient-to-b from-sky-400 to-blue-300 py-9 px-4">
+      <div className="bg-gradient-to-b py-9 px-4">
         {/* Top Dashboard Cards */}
         <Dashboard />
 

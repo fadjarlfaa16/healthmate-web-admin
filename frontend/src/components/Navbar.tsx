@@ -43,19 +43,21 @@ const Navbar = () => {
         {navItems.map((item, index) => (
           <li key={item.name} className="relative">
             <NavLink
-  to={item.path}
-  ref={(el) => {
-    navRefs.current[index] = el;
-  }}
-  className={({ isActive }) =>
-    isActive
-      ? "text-white bg-blue-600 px-4 py-2 rounded-full transition-all duration-300 ease-in-out"
-      : "text-blue-700 px-4 py-2 rounded-full transition-all duration-300 ease-in-out hover:text-blue-900"
-  }
-  aria-current={location.pathname === item.path ? "page" : undefined}
->
-  {item.name}
-</NavLink>
+              to={item.path}
+              ref={(el) => {
+                navRefs.current[index] = el;
+              }}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-white bg-blue-600 px-4 py-2 rounded-full transition-all duration-300 ease-in-out"
+                  : "text-blue-700 px-4 py-2 rounded-full transition-all duration-300 ease-in-out hover:text-blue-900"
+              }
+              aria-current={
+                location.pathname === item.path ? "page" : undefined
+              }
+            >
+              {item.name}
+            </NavLink>
           </li>
         ))}
         <div
@@ -69,6 +71,5 @@ const Navbar = () => {
     </nav>
   );
 };
-
 
 export default Navbar;

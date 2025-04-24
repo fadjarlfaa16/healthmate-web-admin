@@ -6,8 +6,6 @@ import articleRoutes from "./routes/articleRoutes";
 import doctorRoutes from "./routes/doctorRoutes";
 import appointmentRoutes from "./routes/appointmentRoutes";
 
-// const punycode = require("punycode");
-
 const app = express();
 
 const corsOptions = {
