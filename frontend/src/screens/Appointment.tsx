@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-const Appointment = () => {
-  // Example appointment data
 
+const Appointment = () => {
   interface Timestamp {
     _seconds: number;
     _nanoseconds: number;
@@ -16,6 +15,7 @@ const Appointment = () => {
     date: string;
     doctorId: string;
     userId: string;
+    userName?: string;
     doctorName: string;
     specialist: string;
     time: string;
@@ -60,23 +60,6 @@ const Appointment = () => {
   );
   const totalPages = Math.ceil(appointment.length / itemsPerPage);
 
-  // const handleActionClick = (e: appointments) => {
-  //   setSelectedAppointment(e);
-  //   setShowConfirmation(true);
-  // };
-
-  // // Confirm the action
-  // const handleConfirmAction = () => {
-  //   console.log(`Confirmed action for doctor: ${selectedDoctor?.fullname}`);
-  //   setShowConfirmation(false);
-  //   setSelectedDoctor(null);
-  // };
-
-  // // Cancel the action
-  // const handleCancelAction = () => {
-  //   setShowConfirmation(false);
-  //   setSelectedDoctor(null);
-  // };
   return (
     <>
       <div className="overflow-x-auto bg-white rounded-lg shadow">
@@ -98,8 +81,8 @@ const Appointment = () => {
                   {formatDate(e.createdAt)}
                 </td>
                 <td className="px-4 py-2  text-center">{e.doctorName}</td>
-                <td className="px-4 py-2  text-center">{e.userId}</td>
-                <td className="px-4 py-2  text-center">{e.doctorName}</td>
+                <td className="px-4 py-2  text-center">{e.userName}</td>
+                <td className="px-4 py-2  text-center">{e.specialist}</td>
                 <td className="px-4 py-2  text-center">{e.date}</td>
                 <td className="px-4 py-2 text-center">
                   <button

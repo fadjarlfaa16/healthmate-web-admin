@@ -15,7 +15,6 @@ export const getAllAppointmentController = async (
   }
 };
 
-// Mengambil data user dari id
 export const getUserController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
