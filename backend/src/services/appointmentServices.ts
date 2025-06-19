@@ -13,7 +13,6 @@ export const getAllAppointment = async (): Promise<AppointmentWithId[]> => {
     let specialist = "Unknown Specialist";
     let based = "Unknown Location";
 
-    // Ambil user
     if (data.userId) {
       const userDoc = await firestore
         .collection("users")
@@ -25,7 +24,6 @@ export const getAllAppointment = async (): Promise<AppointmentWithId[]> => {
       }
     }
 
-    // Ambil doctor
     if (data.doctorId) {
       const doctorDoc = await firestore
         .collection("doctors")
@@ -55,4 +53,16 @@ export const getAllAppointment = async (): Promise<AppointmentWithId[]> => {
   }
 
   return appointments;
+};
+
+export const updateAppointment = async (
+  id: string,
+  newStatus: string
+): Promise<void> => {
+  const docRef = firestore.collection("appointments").doc(id);
+  const snapshot = await docRef.get();
+  if (!snapshot.exists) {
+    throw new Error("Appointment not found");
+  }
+  await docRef.update({ status: newStatus });
 };

@@ -1,5 +1,3 @@
-import { Timestamp } from "firebase-admin/firestore";
-
 interface Profile {
   fullname?: string;
   domicle?: string;
@@ -11,7 +9,7 @@ export interface User {
   email: string;
   password: string;
   profile: Profile;
-  accountCreated: string;
+  accountCreated: number;
 }
 
 export interface UserWithId extends User {
@@ -34,30 +32,17 @@ export interface DoctorWithId extends Doctor {
 
 export interface Appointment {
   based: string;
-  contact: string;
-  createdAt: Timestamp;
+  /** juga number: hasil Timestamp.toMillis() */
+  createdAt: number;
   date: string;
   doctorId: string;
   doctorName: string;
   specialist: string;
   time: string;
   userId: string;
+  status: string;
 }
 
 export interface AppointmentWithId extends Appointment {
   id: string;
 }
-
-// interface Profile {
-//   fullname?: string;
-//   domicle?: string;
-//   age?: number;
-//   imagePath?: string;
-// }
-
-// export interface User {
-//   email: string;
-//   password: string;
-//   profile: Profile;
-//   accountCreated: string;
-// }

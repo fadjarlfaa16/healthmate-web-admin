@@ -9,3 +9,4 @@ admin.initializeApp({
 const firestore = admin.firestore();
 
 export { admin, firestore };
+export const auth = admin.auth();

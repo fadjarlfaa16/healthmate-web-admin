@@ -15,14 +15,11 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-// Enable CORS for all routes
 app.use(cors());
 app.use(cors(corsOptions));
 
-// Middleware to parse JSON requests
 app.use(bodyParser.json());
 
-// Mount routes under /api
 app.use("/api", userRoutes);
 app.use("/api", articleRoutes);
 app.use("/api", doctorRoutes);

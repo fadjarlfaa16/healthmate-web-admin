@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { DataTable, Column } from "../components/Table";
 import Pagination from "../components/Pagination";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 interface Profile {
   fullname?: string;
@@ -18,23 +10,16 @@ interface Profile {
   imagePath?: string;
 }
 
-interface Timestamp {
-  _seconds: number;
-  _nanoseconds: number;
-}
-
 interface User {
   id: string;
   email: string;
   password: string;
   profile: Profile;
-  accountCreated: Timestamp;
+  accountCreated: number;
 }
 
-const formatDate = (timestamp: Timestamp | undefined): string => {
-  if (!timestamp || typeof timestamp._seconds !== "number") return "-";
-  return new Date(timestamp._seconds * 1000).toLocaleString();
-};
+const formatDate = (ms?: number): string =>
+  typeof ms === "number" ? new Date(ms).toLocaleString() : "-";
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -46,36 +31,41 @@ const Users = () => {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    (async () => {
       try {
-        const response = await axios.get<User[]>(
+        const { data } = await axios.get<User[]>(
           "http://localhost:5000/api/users"
         );
-        setUsers(response.data);
-      } catch (err) {
+        setUsers(data);
+      } catch {
         setError("Error fetching users");
       } finally {
         setLoading(false);
       }
-    };
-    fetchUsers();
+    })();
   }, []);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentUsers = users.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber);
+  const handlePageChange = (page: number) => setCurrentPage(page);
 
   const handleActionClick = (user: User) => {
     setSelectedUser(user);
     setShowConfirmation(true);
   };
 
-  const handleConfirmAction = () => {
-    console.log(`Confirmed action for user: ${selectedUser?.email}`);
-    setShowConfirmation(false);
-    setSelectedUser(null);
+  const handleConfirmAction = async () => {
+    if (!selectedUser) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/users/${selectedUser.id}`);
+      setUsers((prev) => prev.filter((u) => u.id !== selectedUser.id));
+      setShowConfirmation(false);
+      setSelectedUser(null);
+    } catch {
+      setError("Failed to delete user");
+    }
   };
 
   const handleCancelAction = () => {
@@ -83,66 +73,63 @@ const Users = () => {
     setSelectedUser(null);
   };
 
-  if (loading) return <div className="text-center mt-10">Loading users...</div>;
-  if (error) return <div>{error}</div>;
+  const columns: Column<User>[] = [
+    {
+      header: "Profile",
+      render: (u) => (
+        <img
+          src={u.profile.imagePath}
+          alt={u.profile.fullname}
+          className="w-8 h-8 rounded-full mx-auto object-cover"
+        />
+      ),
+      className: "w-[10%]",
+    },
+    { header: "User ID", accessor: "id", className: "w-[20%]" },
+    {
+      header: "Fullname",
+      render: (u) => u.profile.fullname || "-",
+      className: "w-[15%]",
+    },
+    { header: "Email", accessor: "email", className: "w-[20%]" },
+    {
+      header: "Account Created",
+      render: (u) => formatDate(u.accountCreated),
+      className: "w-[20%]",
+    },
+  ];
 
   return (
     <div className="relative p-4 w-full max-w-7xl mx-auto">
-      <div className="overflow-x-auto bg-white rounded-lg shadow">
-        <div className="w-full overflow-x-auto">
-          <div className="flex justify-center">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="font-extrabold w-[10%] text-center">
-                    Profile
-                  </TableHead>
-                  <TableHead className="font-extrabold w-[20%] text-center">
-                    User ID
-                  </TableHead>
-                  <TableHead className="font-extrabold w-[15%] text-center">
-                    Fullname
-                  </TableHead>
-                  <TableHead className="font-extrabold w-[10%] text-center">
-                    Email
-                  </TableHead>
-                  <TableHead className="font-extrabold w-[20%] text-center">
-                    Account Created
-                  </TableHead>
-                  <TableHead className="font-extrabold w-[20%] text-center">
-                    Action
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {currentUsers.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell className=" text-center">User Profile</TableCell>
-                    <TableCell className="text-center">{user.id}</TableCell>
-                    <TableCell className="text-center">
-                      {user.profile.fullname}
-                    </TableCell>
-                    <TableCell className="text-center">{user.email}</TableCell>
-                    <TableCell className="text-center">
-                      {formatDate(user.accountCreated)}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {formatDate(user.accountCreated)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-                ;
-              </TableBody>
-            </Table>
-          </div>
+      <h1 className="text-xl font-semibold mb-5">Users List</h1>
+
+      {error && (
+        <div className="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded-md">
+          {error}
         </div>
-        <Pagination
-          currentPage={currentPage}
-          totalItems={users.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      )}
+
+      <DataTable<User>
+        columns={columns}
+        data={currentUsers}
+        loading={loading}
+        noDataText="No users found."
+        renderActions={(u) => (
+          <button
+            onClick={() => handleActionClick(u)}
+            className="px-3 py-1 text-sm bg-red-600 hover:bg-red-700 text-white rounded"
+          >
+            Delete
+          </button>
+        )}
+      />
+
+      <Pagination
+        currentPage={currentPage}
+        totalItems={users.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={handlePageChange}
+      />
 
       {showConfirmation && (
         <div className="fixed inset-0 flex items-center justify-center z-50">

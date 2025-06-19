@@ -26,47 +26,69 @@ const EditModal: React.FC<EditModalProps> = ({
   onSubmit,
 }) => {
   if (!isOpen) return null;
+
+  const fields: Array<keyof Doctor> = [
+    "fullname",
+    "age",
+    "specialist",
+    "based",
+    "contact",
+  ];
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="bg-white rounded shadow-lg p-6 z-10 w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Edit Doctor</h2>
-        <form onSubmit={onSubmit}>
-          {["fullname", "age", "specialist", "based", "contact"].map(
-            (field) => (
-              <div className="mb-4" key={field}>
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2 text-center"
-                  htmlFor={`edit-${field}`}
-                >
-                  {field.charAt(0).toUpperCase() + field.slice(1)}
-                </label>
-                <input
-                  type={field === "age" ? "number" : "text"}
-                  id={`edit-${field}`}
-                  name={field}
-                  value={(doctor as any)[field] || ""}
-                  onChange={onChange}
-                  className="w-full px-3 py-2 text-center border border-gray-300 rounded-md text-black"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-            )
-          )}
-          <div className="flex justify-end space-x-4 mt-6">
+    <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black opacity-50"
+        onClick={onCancel}
+      />
+
+      {/* Modal */}
+      <div className="relative bg-white rounded-lg shadow-lg w-full max-w-lg p-6 z-10">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800 text-center">
+          Edit Doctor
+        </h2>
+
+        <form
+          onSubmit={onSubmit}
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+        >
+          {fields.map((field) => (
+            <div key={field} className="flex flex-col">
+              <label
+                htmlFor={`edit-${field}`}
+                className="text-gray-700 text-sm mb-1"
+              >
+                {field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              <input
+                id={`edit-${field}`}
+                name={field}
+                type={field === "age" ? "number" : "text"}
+                value={doctor[field] as any}
+                onChange={onChange}
+                required
+                disabled={isLoading}
+                className="px-3 py-2 border border-gray-300 rounded-md text-sm
+                  focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+          ))}
+
+          {/* Buttons */}
+          <div className="sm:col-span-2 flex justify-end space-x-3 mt-2">
             <button
               type="button"
               onClick={onCancel}
-              className="px-4 py-2 text-center bg-gray-300 hover:bg-gray-400 text-gray-800 rounded"
               disabled={isLoading}
+              className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm transition"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-center bg-blue-500 hover:bg-blue-600 text-white rounded"
               disabled={isLoading}
+              className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm transition"
             >
               {isLoading ? "Updating..." : "Update Doctor"}
             </button>
